@@ -18,8 +18,11 @@
 Route::get('/', function () {return view('profile');});
 
 Route::resource('/articles', 'ArticlesController');
+ 
+Route::resource('/comments', 'CommentsController');
 
 Route::resource('admin/posts', 'Admin\\PostsController');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');

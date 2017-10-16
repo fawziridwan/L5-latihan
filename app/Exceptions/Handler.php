@@ -63,6 +63,7 @@ class Handler extends ExceptionHandler
         return redirect()->guest('login');
     }
 
+    // whoops
     protected function convertExceptionToResponse(Exception $e)
     {
         if (config('app.debug')) {

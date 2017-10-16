@@ -1,19 +1,83 @@
 @extends("layouts.index")
 @section("content")
-	<div class="container">
-		<div class="row">
-			<articles class="row">
-				<h2> {!! $articles->title !!} </h2>
-				<div><p style="text-align: justify;">{!! $articles->content !!}</p></div>
-				<div><p>{!! $articles->writer !!}</p></div>
-			</articles>	
-
-			{!! Form::open(array('route'=>array('articles.destroy', $articles->id), 'method'=>'delete')) !!}
-			{!! link_to(route('articles.index'), "Back", ['class' => 'btn btn-flat blue accent-3 waves-effect waves-light white-text']) !!}
-			{!! link_to(route('articles.edit', $articles->id), "Edit", ['class' => 'btn btn-flat green accent-3 waves-effect waves-light white-text']) !!}
-			{!! Form::submit('Delete', array('class'=>'btn btn-flat black accent-3 waves-effect waves-light white-text', "onclick"=>"return confirm('are you sure want delete data?')")) !!}
-			{!! Form::close() !!}			
+	{{-- <div class="row"> --}}
+		<div class="container" style="background-color: white; padding: 20px; border-radius: 10px; color: black;">
+				<articles class="row">
+					<blockquote style="border-left: 5px solid #29b6f6;">
+						<p class="flow-text"><strong>{!! $articles->title !!}</strong></p>
+					</blockquote>
+					<div class="pull-right"><b><i>{!! $articles->writer !!}</i></b></div>
+					<div><p style="text-align: justify;">{!! $articles->content !!}</p></div>
+				</articles>	
+				{!! Form::open(array('route'=>array('articles.destroy', $articles->id), 'method'=>'delete')) !!}
+				{!! link_to(route('articles.index'), "Back", ['class' => 'btn btn-flat blue accent-3 waves-effect waves-light white-text']) !!}
+				{!! link_to(route('articles.edit', $articles->id), "Edit", ['class' => 'btn btn-flat green accent-3 waves-effect waves-light white-text']) !!}
+				{!! Form::submit('Delete', array('class'=>'btn btn-flat black accent-3 waves-effect waves-light white-text', "onclick"=>"return confirm('are you sure want delete data?')")) !!}
+				{!! Form::close() !!}			
 		</div>
-	</div>
+	{{-- </div> --}}
+	<br>
+	{{-- <div class="row"> --}}
+		<div class="container" style="background-color: white; padding: 20px; border-radius: 10px; color: black;">
+			<blockquote style="border-left: 5px solid green;">
+				<p class="flow-text">Give Comments</p>
+			</blockquote>
+			{!! Form::open(['route' => 'comments.store', 'class' => 'form-horizontal', 'role' => 'form']) !!}
+			<div class="row">
+				<div class="input-field col s12">
+					{!! Form::hidden('article_id', $value = $articles->id, array('readonly')) !!}
+				</div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					{!! Form::label('content', 'Content', array('class' => 'col-lg-3 control-label')) !!}
+					{!! Form::textarea('content', null, array('class'=>'materialize-textarea','autofocus' => 'true')) !!}
+					{!! $errors->first('content') !!}
+				</div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					{!! Form::label('user', 'User', array('class' => 'col-lg-3 control-label')) !!}
+					{!! Form::text('user', null)!!}
+					{!! $errors->first('user') !!}				
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="row">
+				<div class="col-lg-3"></div>
+					<div class="input-field col s12">
+					{!! Form::submit('Save', array('class' => 'btn btn-flat blue accent-3 waves-effect waves-light white-text pull-right'))!!}
+						</div>
+						<div class="clear"></div>
+			</div>
+			{!! Form::close() !!}						
+		</div>		
+	{{-- </div>	 --}}
+	<br>
+	{{-- <div class="row"> --}}
+		<div class="container">
+			<div class="col-md-12" style="padding: 20px; border-radius: 20px; background-color: #fff;">
+				<blockquote style="border-left: 5px solid red;"><p class="flow-text">Comments</p></blockquote>
+				@foreach($comments as $comment)
+				<div class="col-md-3">
+					<strong>{!! $comment->user !!}</strong>
+					<p class="pull-right">Publish On <b><i>{!! $comment->created_at->format('D d M Y') !!}</i></b></p>
+				</div>
+				<br>
+				<hr>
+				<div class="col-md-9">
+					{{-- <article class="row" style="margin-left: 5px;"> --}}
+						<p style="text-align: justify;">{!! $comment->content !!}</p>					
+					{{-- </article> --}}
+				</div>
+				@endforeach		
+			</div>
+		</div>		
+	{{-- </div>	 --}}
 @stop 
 
+ 
