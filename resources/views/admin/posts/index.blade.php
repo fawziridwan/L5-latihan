@@ -10,7 +10,7 @@
                     <div class="panel-heading">Posts</div>
                     <div class="panel-body">
                         <a href="{{ url('/admin/posts/create') }}" class="btn btn-success btn-sm" title="Add New Post">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                            <i class="glyphicon glyphicon-plus" aria-hidden="true"></i> Add New
                         </a>
 
                         <form method="GET" action="{{ url('/admin/posts') }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
@@ -18,7 +18,7 @@
                                 <input type="text" class="form-control" name="search" placeholder="Search...">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default" type="submit">
-                                        <i class="fa fa-search"></i>
+                                        <i class="glyphicon glyphicon-search"></i>
                                     </button>
                                 </span>
                             </div>

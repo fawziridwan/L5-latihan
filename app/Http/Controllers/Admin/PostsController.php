@@ -53,13 +53,27 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         
-        $requestData = $request->all();
+        /*$requestData = $request->all();
         
         Post::create($requestData);
 
         Session::flash('flash_message', 'Post added!');
 
-        return redirect('admin/posts');
+        return redirect('admin/posts');*/
+
+        $this->validate($request,   [
+            'title'=>'required|min:12',
+            'content'=>'required|min:10',
+            'category'=>'required'
+        ]);
+
+        $tambah = new Post();
+        $tambah->title = $request['title'];
+        $tambah->content = $request['content'];
+        $tambah->category = $request['category'];
+        $tambah->save();
+
+        return redirect()->to('/admin/posts');
     }
 
     /**

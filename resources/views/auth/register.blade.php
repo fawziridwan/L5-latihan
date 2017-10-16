@@ -13,8 +13,8 @@
                         <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
 
                             <div class="input-field col s12">
-                                <label for="name" class="col-md-4 control-label">Name</label>
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                <label for="name" class="col-md-4 control-label" placeholder="Nama"></label>
+                                <input id="name" type="text" class="form-control" name="name" placeholder="Nama" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -27,8 +27,8 @@
                         <div class="row{{ $errors->has('email') ? ' has-error' : '' }}">
 
                             <div class="input-field col s12">
-                               <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                               <label for="email" class="col-md-4 control-label" placeholder="E-Mail Address"></label>
+                                <input id="email" type="email" class="form-control" name="email" placeholder="E-Mail Address" required>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -41,8 +41,8 @@
                         <div class="row{{ $errors->has('password') ? ' has-error' : '' }}">
 
                             <div class="input-field col s12">
-                                <label for="password" class="col-md-4 control-label">Password</label>
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <label for="password" class="col-md-4 control-label" placeholder"Password"></label>
+                                <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -55,8 +55,8 @@
                         <div class="row">
 
                             <div class="input-field col s12">
-                                <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <label for="password-confirm" class="col-md-4 control-label" placeholder="Confirm Password"></label>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
                             </div>
                         </div>
 
