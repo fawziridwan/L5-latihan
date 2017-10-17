@@ -12,3 +12,4 @@ class Image extends Model
         return belongsTo('App\Article','article_id');
     }
 }
+  

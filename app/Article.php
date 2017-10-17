@@ -20,3 +20,4 @@ class Article extends Model
     	return array('content'=>'required');
     }
 }
+ 

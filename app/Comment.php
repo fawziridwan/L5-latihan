@@ -12,11 +12,12 @@ class Comment extends Model
 
     public static function valid()  {
         return array(
-            'content'=>'required'
+            'content'=>'required'  
         );
     }
-
+    // relation articles -> comment
     public function article()   {
         return $this->belongsTo('App\Article', 'article_id');
     }
 }
+ 
