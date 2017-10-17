@@ -40,7 +40,7 @@ return [
     | Supported Drivers: "local", "ftp", "s3", "rackspace"
     |
     */
-
+    
     'disks' => [
 
         'local' => [

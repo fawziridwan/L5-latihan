@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
+use App\Image;
 use Session;
 use App\Http\Requests\ArticleRequest;
 
@@ -49,9 +50,15 @@ class ArticlesController extends Controller
     {
         $articles = Article::find($id);
         $comments = Article::find($id)->comments->sortBy('Comment.created_at');
+        $photos = Article::find($id)->photos->sortBy('Image.created_at');
+        $a =0;
+        $b = 0;
         return view('articles.show')
-        ->with('articles', $articles)
-        ->with('comments', $comments);        
+        ->with('articles', $articles) 
+        ->with('comments', $comments) 
+        ->with('photos', $photos)
+        ->with('a', $a)
+        ->with('b', $b);
     }
 
     /**
@@ -84,10 +91,6 @@ class ArticlesController extends Controller
             Session::flash("error", "Article fail updated");
             return redirect()->route("articles.show",$id);
         }
-        // return redirect()->route("articles.show",$id);
-        // Article::find($id)->update($request->all());
-        // Session::flash("notice", "Article success updated");
-        // return redirect()->route("articles.show",$id);        
     }
 
     /**
@@ -98,12 +101,22 @@ class ArticlesController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        if (Article::create($request->all())) {
-            Session::flash("notice", "Article success created");
+        $articles = Article::create($request->all());
+        if ($articles) {
+            foreach ($request->image as $photo) {
+                $rename = "img_".str_random(6).$photo->extension();
+                $image = $photo->storeAs('public/image', $rename);
+
+                Image::create([
+                    'article_id' => $articles->id,
+                    'image' => $rename
+                ]);
+            }
+            return redirect()->route("articles.index");                    
         } else {
-            Session::flash("error", "Data fail to created");
+            return redirect()->route("articles.index");        
         }
-        return redirect()->route("articles.index");        
+        return 'Upload successful!';
     }
 
     /**

@@ -12,7 +12,7 @@
 		<div class="input-field col s12">
 		{!! Form::label('content', 'Content', array('class' => 'col-lg-3 control-label')) !!}
 		{!! Form::textarea('content', null, array('class'=>'materialize-textarea','autofocus' => 'true')) !!}
-		<div style="color: red" class="data-error"> {!! $errors->first('title') !!} </div>
+		<div style="color: red" class="data-error"> {!! $errors->first('content') !!} </div>
 			<div class="clear"></div>
 		</div>
 	</div>
@@ -24,7 +24,18 @@
 		<div style="color: red" class="data-error"> {!! $errors->first('writer') !!} </div>
 			<div class="clear"></div>
 		</div>
-	</div> 
+	</div>
+
+	<div class="row">
+        <div class="input-field col s12">
+			{!! Form::label('image', 'Image', array('class'=>'col-lg-3 control-label')) !!}        	
+			<br><br><br>
+            <input type="file" name="image[]" id="image[]" multiple />
+			<div style="color: red" class="data-error"> {!! $errors->first('image') !!} </div>
+				<div class="clear"></div>
+			</div>
+        </div>
+    </div>
 
 	<div class="row" style="margin-left: 2px; margin-right: 2px;">
 		<div class="col-lg-3"></div>
