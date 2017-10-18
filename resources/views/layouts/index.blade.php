@@ -10,7 +10,7 @@
 
     @show
 </head>
-<body style="background-color: #e0e0e0;">
+<body style="background-color: #fff;">
 @section('header')
     @include('layouts.header')
 @show

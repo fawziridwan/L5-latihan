@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Article;
+use App\Image;
+use Session;
+use File;
+use App\Http\Request\ArticleRequest;
 
 class ImageController extends Controller
 {
@@ -45,7 +50,8 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        //
+        $img = Image::find($id);
+        return view('articles.show_image')->with('img',$img);
     }
 
     /**
@@ -79,6 +85,6 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
