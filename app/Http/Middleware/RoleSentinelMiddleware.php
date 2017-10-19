@@ -23,7 +23,8 @@ class RoleSentinelMiddleware
             return $next($request);
         } else {
             Session::flash('error', 'You dont have privilege');
-            return redirect()->route('root');
+            // return redirect()->route('profile');
+            return redirect('/');
         }
     }
 }

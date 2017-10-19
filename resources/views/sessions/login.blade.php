@@ -24,24 +24,15 @@
 				</div>
 			<div class="clear"></div>
 			</div>
-			{{-- <div class="row">
-					{!! Form::label('remember', 'Remember Me', array('for'=>'remember','class' =>'validate')) !!}
-					{!! Form::checkbox('remember', null, array('class' => 'validate')) !!}
-					<div class="input-field col s12">
-					</div>
-				<div class="clear"></div>
-			</div> --}}
-
-			<div class="row">
+			<div class="row pull-right">
 				<div class="col-lg-3"></div>
 					<div class="input-field col s12">
-				{!! Form::submit('Login', array('class' => 'btn btn-raised btn-primary')) !!}
-				<br />
-				{!! link_to(route('reminders.create'), 'Forgot Password?') !!}
+						{!! Form::submit('Login', array('class' => 'btn btn-raised btn-primary')) !!}
+						{!! link_to(route('reminders.create'), 'Forgot Password?', array('class'=>'btn btn-flat green white-text')) !!}
 					</div>
 				<div class="clear"></div>
 			</div>
 			{!! Form::close() !!}			
 		</div>
 	</div>
-@stop
+@stop 
