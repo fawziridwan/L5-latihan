@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Sentinel;
+use Session;
 
 class SentinelMiddleware
 {
@@ -19,6 +21,7 @@ class SentinelMiddleware
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
+                Session::flash("warning","You need to login first in order to access the page");                
                 return redirect()->guest('login');
             }
         }

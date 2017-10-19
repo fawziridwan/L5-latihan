@@ -3,7 +3,7 @@
     <ul class="right hide-on-med-and-down">
         @if (Sentinel::check())
           <li>{!! link_to(route('logout'), 'Logout') !!}</li>
-          <li><a>Wellcome {!! Sentinel::getUser()->email !!}</a></li>
+          <li><a>Welcome {!! Sentinel::getUser()->first_name !!}</a></li>
           <li><a href="{{ url('/articles')}}">Articles</a></li>
         @else
           <li><a  href="{{ url('/home') }}">Home</a></li>

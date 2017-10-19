@@ -11,6 +11,9 @@ use Session;
 
 class PostsController extends Controller
 {
+    public function __construct() {
+        $this->middleware('sentinel');
+    } 
     /**
      * Display a listing of the resource.
      *

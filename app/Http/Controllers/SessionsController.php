@@ -18,9 +18,9 @@ class SessionsController extends Controller
 		}
 	}
 
-	public function login_store()	{
+	public function login_store(SessionRequest $request)	{
 		if($user = Sentinel::authenticate($request->all())) {
-			Session::flash("notice", "Welcome ".$user->email);
+			Session::flash("notice", "Welcome ".$user->first_name);
 			return redirect()->intended('/');
 		} else {
 			Session::flash("error", "Login fails");

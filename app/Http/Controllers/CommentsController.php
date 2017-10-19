@@ -12,6 +12,13 @@ use Session;
 
 class CommentsController extends Controller
 {
+    /*
+    Display Construct for check status user login
+    */    
+    public function __construct() {
+        $this->middleware('sentinel');
+        $this->middleware('sentinel.role');
+    }     
     /**
      * Display a listing of the resource.
      *
