@@ -9,6 +9,7 @@ use App\Http\Requests\ReminderRequest;
 use Session, Event;
 use Sentinel, Reminder;
 use App\Events\ReminderEvent;
+use Alert;
 
 class ReminderController extends Controller
 {

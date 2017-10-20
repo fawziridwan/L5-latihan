@@ -61,14 +61,10 @@
                         <div class="title m-b-md">
                             <p class="flow-text"><blockquote>Laravel</blockquote></p>
                         </div>
-
-                        <div class="links">
-                            <a href="{{ url('/articles')}}">Articles</a>
-                            <a href="{{ url('/admin/posts')}}">Posts</a>
-                            <a href="https://laravel-news.com">News</a>
-{{--                             <a href="https://forge.laravel.com">Forge</a> --}}
-                            <a href="https://github.com/laravel/laravel">GitHub</a>
-                        </div>
+                        <p class="content" style="text-align: justify;">
+                            With Laravel, my job isn't done until even the underside is clean, and I've come to find enjoyment in it. <br>
+                            <b><center>Taylor Otwell</center></b>
+                        </p>
                     </div>
                 </div>
             </div>

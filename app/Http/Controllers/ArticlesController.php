@@ -7,22 +7,14 @@ use App\Image;
 use Session;
 use File;
 use App\Http\Requests\ArticleRequest;
+use Alert;
 
 class ArticlesController extends Controller
-{
+{ 
     public function __construct() {
         $this->middleware('sentinel');
         $this->middleware('sentinel.role');
     }    
-    /**
-     * Display a form search of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search()    
-    {
-        // 
-    }
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +23,7 @@ class ArticlesController extends Controller
     public function index()
     {
         $articles = Article::all();
+        $articles = Article::paginate(3);
         return view('articles.index')->with('articles',$articles);
     }
 
@@ -41,7 +34,8 @@ class ArticlesController extends Controller
      */
     public function create()
     { 
-        return view('articles.create');
+        $create = true;        
+        return view('articles.create')->with('create',$create);
     }
 
 
@@ -75,7 +69,8 @@ class ArticlesController extends Controller
     public function edit($id)
     {
         $articles = Article::find($id);
-        return view('articles.edit')->with('articles', $articles);    
+        $create = false;        
+        return view('articles.edit',compact('articles','create'));    
     }
 
     /**
@@ -90,30 +85,12 @@ class ArticlesController extends Controller
         $articles = Article::find($id)->update($request->all());
 
         if ($articles) {
-            Session::flash("notice", "Article success updated");
+            Alert::success('Article success updated');
             return redirect()->route("articles.show",$id);
         } else {
-            Session::flash("error", "Article fail updated");
+            Alert::error('Article fail updated');
             return redirect()->route("articles.show",$id);
         }
-
-        // $articles = Article::find($id)->update($request->all());
-        
-        // if ($articles) {
-        //     foreach ($request->image as $photo) {
-        //         $rename = "img_".str_random(6).$photo->extension();
-        //         $image = $photo->storeAs('public/image', $rename);
-
-        //         Image::create([
-        //             'article_id' => $articles->id,
-        //             'image' => $rename
-        //         ]);
-        //     }
-        //     return redirect()->route("articles.index");                    
-        // } else {
-        //     return redirect()->route("articles.index");        
-        // }
-        // return 'Upload successful!';        
     }
 
     /**
@@ -124,7 +101,7 @@ class ArticlesController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        $articles = Article::create($request->all());
+        /*$articles = Article::create($request->all());
         if ($articles) {
             foreach ($request->image as $photo) {
                 $rename = "img_".str_random(6).$photo->extension();
@@ -140,6 +117,25 @@ class ArticlesController extends Controller
             return redirect()->route("articles.index");        
         }
         return 'Upload successful!';
+        */
+        $articles = Article::create($request->all());
+        $destination_path = "uploads/";
+        foreach ($request->image as $image) {
+            $name = str_random(6).'_'.$image->getClientOriginalName();
+            $image->move($destination_path,$name);
+             Image::create([
+                 'article_id' => $articles->id,
+                 'image' => $destination_path.$name
+             ]);
+        }
+        if ($articles) {
+            Alert::success('Articles success Added');
+            return redirect()->route('articles.index');
+        } else {
+            Alert::error('Articles fail to added');        
+            return redirect()->route('articles.index');
+        }
+        
     }
 
     /**
@@ -153,23 +149,19 @@ class ArticlesController extends Controller
         try {
             $img_file = Image::where('article_id',$id)->get();
             if ($img_file != null) {
-                foreach ($variable as $key => $value) {
-                    File::delete($img_file->image);
+                foreach ($img_file as $img) {
+                    File::delete($img->image);
                 }
                 Image::where('article_id',$id)->delete();
             }
             Article::destroy($id);
-            Session::flash("notice_delete","");
+            Alert::success('Delete file successfull'); 
             return redirect()->route('articles.index');            
         } 
         catch (Exception $e) {
-            Session::flash("error","Whoops something went wrong, failed to delete!!");
+            Alert::error('Whoops something went wrong, failed to delete!!'); 
             return redirect()->route('articles.index');                        
         }
-
-        /*Article::destroy($id);
-        Session::flash("notice", "Article success deleted");
-        return redirect()->route("articles.index");*/
     }
 
     public function showImage($id)   
@@ -188,10 +180,12 @@ class ArticlesController extends Controller
             'image'=>$dest_path.$name
         ]);
         if ($update){
-            Session::flash("notice_update_img", "image success updated");
+            // Session::flash("notice_update_img", "image success updated");
+            Alert::success('image success updated');
             return redirect()->route("articles.show", $img->article_id);
         } else {
-            Session::flash("error", "image fails updated");
+            // Session::flash("error", "image fails updated");
+            Alert::error('image fails updated');
             return redirect()->route("articles.show", $img->article_id);
         }    
     }
@@ -202,7 +196,8 @@ class ArticlesController extends Controller
         try {
             File::delete($img_file->image); //deleting old image            
             Image::destroy($id);
-            Session::flash("notice_delete_img","");
+            // Session::flash("notice_delete_img","image");
+            Alert::success('Image delete successful');
             return redirect()->route('articles.show',$img_file->article_id);
         } catch (Exception $e) {
             return redirect()->route('articles.show',$img_file->article_id);            

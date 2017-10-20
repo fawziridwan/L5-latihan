@@ -9,6 +9,7 @@ use App\Comment;
 use App\Article;
 use Validator;
 use Session;
+use Alert;
 
 class CommentsController extends Controller
 {
@@ -54,7 +55,8 @@ class CommentsController extends Controller
                 ->withInput();
         } else {
             Comment::create($request->all());
-            Session::flash('notice', 'Success add comment');
+            // Session::flash('notice', 'Success add comment');
+            Alert::success('Success Add comment');
             // return Redirect::to('articles/'. $request->article_id);
             return redirect()->route('articles.show', $request->article_id);
         }

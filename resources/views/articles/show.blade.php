@@ -1,4 +1,4 @@
-@extends("layouts.index")
+	@extends("layouts.index")
 @section("content")
 		<div class="container" style="background-color: white; padding: 20px; border-radius: 10px; color: black;">
 			<div class="col s9" style="margin:10px;">	
@@ -19,7 +19,7 @@
 						<div class="col s4">
 						  <div class="card">
 						    <div class="card-image">
-								<img id="imgPhoto" onclick="boxed()" class="img-responsive materialboxed" src="{{ asset($photo->image) }}" alt="">
+								<img onclick="boxed()" class="img-responsive materialboxed" src="{{ asset($photo->image) }}" alt="" style="width: 270px;height: 200px; padding: 5px;">
 						      <span class="card-title"></span>
 						    </div>
 						    <div class="card-content">
@@ -37,22 +37,17 @@
 			</div>			
 			@endif
 		</div>
-
-{{-- 		<div class="row">
-			{!! Form::open(array('route'=>array('articles.destroy', $articles->id), 'method'=>'delete')) !!}
-			{!! link_to(route('articles.index'), "Back", ['class' => 'btn btn-flat blue accent-3 waves-effect waves-light white-text']) !!}
-			{!! link_to(route('articles.edit', $articles->id), "Edit", ['class' => 'btn btn-flat green accent-3 waves-effect waves-light white-text']) !!}
-			{!! Form::submit('Delete', array('class'=>'btn btn-flat black accent-3 white-text', "onclick"=>"return confirm('are you sure want delete data?')")) !!}
-			{!! Form::close() !!}			
-		</div> --}}
-{{-- 		<div class="container">
-			<div class="col s12" style="padding: 20px; border-radius: 20px; background-color: #fff;">
-				<blockquote style="border-left: 5px solid red;"><p class="flow-text">Image</p></blockquote>
-				<br>
-					<img id="imgPhoto" onclick="boxed()" class="img-responsive materialboxed" src="{{ asset('storage') }}/image/{{ $photo->image }}" alt=""><br>						
+		<div class="container">
+			<div class="row">
+				<div class="col 12">
+					{!! Form::open(array('route'=>array('articles.destroy', $articles->id), 'method'=>'delete')) !!}
+					{!! link_to(route('articles.index'), "Back", ['class' => 'btn btn-flat blue accent-3 waves-effect waves-light white-text']) !!}
+					{!! link_to(route('articles.edit', $articles->id), "Edit", ['class' => 'btn btn-flat green accent-3 waves-effect waves-light white-text']) !!}
+					{!! Form::submit('Delete', array('class'=>'btn btn-flat black accent-3 white-text', "onclick"=>"return confirm('are you sure want delete data?')")) !!}
+					{!! Form::close() !!}										
+				</div>			
 			</div>
 		</div>
- --}}							
 		<br>
 		<div class="container">
 			<div class="row">
@@ -98,17 +93,12 @@
 					{!! Form::close() !!}											
 				</div>
 				<div id="test2" class="col s12">
-{{-- 					<div class="container">
-						<div class="col s12" style="padding: 20px; border-radius: 20px; background-color: #fff;"> --}}
-							{{-- <blockquote style="border-left: 5px solid red;"><p class="flow-text">Comments</p></blockquote> --}}
-							@foreach($comments as $comment)
-							<div class="col s12">
-								<p class="pull-right"> Create by <b><i>{!! $comment->user !!}</i></b> <br> Publish On <b><i>{!! $comment->created_at->format('D d M Y') !!}</i></b></p>
-									<p style="text-align: justify;">{!! $comment->content !!}</p>					
-							</div>
-							@endforeach		
-{{-- 						</div>								
-					</div> --}}		
+					@foreach($comments as $comment)
+					<div class="col s12">
+						<p class="pull-right"> Create by <b><i>{!! $comment->user !!}</i></b> <br> Publish On <b><i>{!! $comment->created_at->format('D d M Y') !!}</i></b></p>
+							<p style="text-align: justify;">{!! $comment->content !!}</p>					
+					</div>
+					@endforeach		
 				</div>
 			</div>			
 		</div>
@@ -120,11 +110,3 @@
 		});			
 	}
 </script>
-
-<style type="text/css" media="screen">
-	#imgPhoto 	{
-		width: 356px;
-		height: 280px;
-		overflow: auto navy;
-	}
-</style>

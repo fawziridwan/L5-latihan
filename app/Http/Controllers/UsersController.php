@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Sentinel;
 use Session;
+use Alert;
 use App\Http\Requests\UserRequest;
 class UsersController extends Controller
 {
     public function signup()	
     {
     	return view('users.signup');
-    }
+    } 
 
     public function signup_store(UserRequest $request)
 	{
@@ -24,8 +25,17 @@ class UsersController extends Controller
 	        'first_name' => $request->first_name,
 	        'last_name' => $request->last_name
 	    ];		
-		Sentinel::registerAndActivate($fill);
-		Session::flash('notice_register', 'Success create new user');
+		
+		$defaultUser = Sentinel::registerAndActivate($fill);
+
+		$defaultRole = Sentinel::findRoleByName('writer');
+		
+		$defaultUser->roles()->attach($defaultRole);
+		// sweetalert
+		Alert::success('Success create new user');
+		// session bawaan laravel
+		// Session::flash('notice', 'Success create new user');
+
 		return redirect()->back();
 	}
 }

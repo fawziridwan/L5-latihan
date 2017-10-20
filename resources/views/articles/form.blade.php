@@ -25,7 +25,8 @@
 			<div class="clear"></div>
 		</div>
 	</div>
-
+	
+	@if($create == true)
 	<div class="row">
         <div class="input-field col s12">
 			{!! Form::label('image', 'Image', array('class'=>'col-lg-3 control-label')) !!}        	
@@ -36,6 +37,7 @@
 			</div>
         </div>
     </div>
+    @endif
 
 	<div class="row" style="margin-left: 2px; margin-right: 2px;">
 		<div class="col-lg-3"></div>

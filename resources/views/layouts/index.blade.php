@@ -5,9 +5,10 @@
 	<link rel="stylesheet" href="{{asset('css/materialize.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	@section('css')
-    @show
+    @show 
 </head>
 <body style="background-color: #fff;">
 @section('header')
@@ -44,9 +45,10 @@
 	 {{-- </div> --}}
 	@yield('content')
 </div>
-
+@include('sweet::alert');
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="{{asset('js/materialize.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script type="text/javascript">
 (function($){
   $(function(){

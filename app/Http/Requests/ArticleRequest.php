@@ -26,9 +26,8 @@ class ArticleRequest extends FormRequest
         return [
             'title' =>'required|unique:articles,title|max:225',
             'content' =>'required|unique:articles,content|max:255',
-            'writer' =>'required|unique:articles,writer|min:5',
-            'image' => "max:2048|array",
-            'image.*' => "image|mimes:jpg,png,gif",
+            'image' => 'required',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     }
 
@@ -37,16 +36,6 @@ class ArticleRequest extends FormRequest
         return [
             'title.require' =>'Title is required, at least fill a character',
             'title.unique' =>'Title must unique, take another title',
-
-            'content.require' =>'Content is required, at least fill a character',
-            'content.unique' =>'Content must unique, take another author',
-
-            'author.require' =>'Author is required, at least fill a character',
-            'author.unique' =>'Author must unique, take another author',                        
-
-            'writer.require' =>'Writer is required, at least fill a character',
-            'writer.unique' =>'Writer must unique, take another author',                            
-
             'image' =>'Online Extension image Allowed'
         ];
     }
