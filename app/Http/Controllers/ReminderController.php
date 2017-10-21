@@ -24,9 +24,11 @@ class ReminderController extends Controller
 		($reminder = Reminder::exists($user)) || ($reminder =
 		Reminder::create($user));
 		Event::fire(new ReminderEvent($user, $reminder));
-		Session::flash('notice', 'Check your email for instruction');
+		// Session::flash('notice', 'Check your email for instruction');
+		Alert::info('Email was sent, please check your email for instruction!');
 		} else {
-		Session::flash('error', 'Email not valid');
+			Alert::error('Email not valid!');
+			// Session::flash('error', 'Email not valid');
 		}
 		return view('reminders.create');
 	}
@@ -45,10 +47,12 @@ class ReminderController extends Controller
 		$reminder = Reminder::exists($user, $code);
 		if ($reminder) {
 			Session::flash('notice', 'Your password success modified');
+			Alert::success('Your password success modified');
 			Reminder::complete($user, $code, $request->password);
 			return redirect('login');
 		} else {
-			Session::flash('error', 'Passwords must match.');
+			// Session::flash('error', 'Passwords must match.');
+			Alert::error('Passwords must match.!');
 		}
 	}	
 }

@@ -1,14 +1,22 @@
-	@extends("layouts.index")
+@extends("layouts.index")
 @section("content")
 		<div class="container" style="background-color: white; padding: 20px; border-radius: 10px; color: black;">
 			<div class="col s9" style="margin:10px;">	
-				<div class="row">
-					<blockquote style="border-left: 5px solid #29b6f6;">
-						<p class="flow-text"><strong>{!! $articles->title !!}</strong></p>
-					</blockquote>
-					<br>
-					<p style="text-align: justify; background: #fff; ">{!! $articles->content !!}</p>
-				</div>					
+				<div class="card">
+					<div class="card-content">
+						<blockquote style="border-left: 5px solid #29b6f6;">
+							<p class="flow-text"><strong>{!! $articles->title !!}</strong></p>
+							<p style="text-align: justify; background: #fff; ">{!! $articles->content !!}</p>
+						</blockquote>
+					</div>
+					<div class="card-action">
+						{!! Form::open(array('route'=>array('articles.destroy', $articles->id), 'method'=>'delete')) !!}
+						{!! link_to(route('articles.index'), "Back", ['class' => 'btn btn-flat blue accent-3 waves-effect waves-light white-text']) !!}
+						{!! link_to(route('articles.edit', $articles->id), "Edit", ['class' => 'btn btn-flat green accent-3 waves-effect waves-light white-text']) !!}
+						{!! Form::submit('Delete', array('class'=>'btn btn-flat black accent-3 white-text', "onclick"=>"return confirm('are you sure want delete data?')")) !!}
+						{!! Form::close() !!}	
+					</div>				
+				</div>
 			</div>
 		</div>
 
@@ -37,7 +45,7 @@
 			</div>			
 			@endif
 		</div>
-		<div class="container">
+{{-- 		<div class="container">
 			<div class="row">
 				<div class="col 12">
 					{!! Form::open(array('route'=>array('articles.destroy', $articles->id), 'method'=>'delete')) !!}
@@ -47,7 +55,7 @@
 					{!! Form::close() !!}										
 				</div>			
 			</div>
-		</div>
+		</div> --}}
 		<br>
 		<div class="container">
 			<div class="row">

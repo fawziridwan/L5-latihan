@@ -29,7 +29,7 @@
 				        @if (Session::has('notice'))
 				            <div class="card-panel green darken-3 white-text">
 				        {{Session::get('notice')}}
-				        </div>
+				        </div> 
 				        @endif
 				        @if (count($errors) > 0)
 					        <div class="card-panel orange white-text">
@@ -45,10 +45,10 @@
 	 {{-- </div> --}}
 	@yield('content')
 </div>
-@include('sweet::alert');
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="{{asset('js/materialize.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+@include('sweet::alert');
 <script type="text/javascript">
 (function($){
   $(function(){

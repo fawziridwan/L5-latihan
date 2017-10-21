@@ -23,8 +23,6 @@
 					<div class="clear"></div>
 				</div>				
 			</div>
-
-			
 			{!! Form::close() !!}			
 		</div>	
 	</div>
