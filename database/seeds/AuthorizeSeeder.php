@@ -24,8 +24,8 @@ class AuthorizeSeeder extends Seeder
 			$adminuser->roles()->attach($adminrole);
 		///// this for seed data writer
 		$role_writer = [
-			"slug" => "writer",
-			"name" => "Writer",
+			"slug" => "visitor",
+			"name" => "visitor",
 			"permissions" => [
 				"articles.index" => true,
 				"articles.create" => true,
@@ -36,9 +36,9 @@ class AuthorizeSeeder extends Seeder
 			]
 		];
 		Sentinel::getRoleRepository()->createModel()->fill($role_writer)->save();
-			$writerrole = Sentinel::findRoleByName('Writer');
-			$user_writer = ["first_name"=>"Oda", "last_name"=>"E","email"=>"oda@e.com", "password"=>"12345678"];
-			$writeruser = Sentinel::registerAndActivate($user_writer);
+			$writerrole = Sentinel::findRoleByName('Visitor');
+			$user_visitor = ["first_name"=>"Oda", "last_name"=>"E","email"=>"oda@e.com", "password"=>"12345678"];
+			$writeruser = Sentinel::registerAndActivate($user_visitor);
 			$writeruser->roles()->attach($writerrole);
     }
 }

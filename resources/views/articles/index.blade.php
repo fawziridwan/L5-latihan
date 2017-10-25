@@ -11,5 +11,5 @@
 			</div>
 		</div>		
 	</div>
-	@include('articles.list')
+	@include('application.list');
 @stop
