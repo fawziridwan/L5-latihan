@@ -20,11 +20,33 @@ class ArticlesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::all();
-        $articles = Article::paginate(3);
-        return view('articles.index')->with('articles',$articles);
+        // cara konvensional
+        // $articles = Article::paginate(3);
+        // $articles = Article::all();
+        // return view('articles.index')->with('articles',$articles);
+        if($request->ajax()) {
+            $articles = Article::where('title', 'like', '%'.$request->keywords.'%')
+            ->orWhere('content', 'like', '%'.$request->keywords.'%');
+            if($request->direction) {
+            $articles = $articles->orderBy('id', $request->direction);
+            }
+            $articles = $articles->paginate(3);
+            
+            $request->direction == 'asc' ? $direction = 'desc' : $direction =
+            'asc';
+            $request->keywords == '' ? $keywords = '' : $keywords = $request->keywords;
+            
+            $view = (String) view('articles.list')
+            ->with('articles', $articles)
+            ->render();
+            return response()->json(['view' => $view, 'direction' =>
+            $direction, 'keywords' => $keywords, 'status' => 'success']);
+            } else {
+            $articles = Article::paginate(3);
+            return view('articles.index')->with('articles', $articles);
+        }
     }
 
     /**

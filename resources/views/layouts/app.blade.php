@@ -92,7 +92,6 @@
         @endif
         @yield('content')
     </div>
-
     <!-- Scripts -->
     <script src="/js/app.js"></script>
 </body>

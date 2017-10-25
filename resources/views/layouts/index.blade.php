@@ -19,33 +19,98 @@
 	 {{-- <div class="row row-offcanvas row-offcanvas-left"> --}}
 	 	{{-- <div id="main-content" class="col-xs-9 col-sm-9 main"> --}}
 	 		<div class="container">
-		 		<div class="row">
-					<section>
-				        @if (Session::has('error'))
-				        <div class="card-panel black darken-3 white-text">
-				            {{Session::get('error')}}
-				        </div>
-				        @endif
-				        @if (Session::has('notice'))
-				            <div class="card-panel green darken-3 white-text">
-				        {{Session::get('notice')}}
-				        </div> 
-				        @endif
-				        @if (count($errors) > 0)
-					        <div class="card-panel orange white-text">
-					            @foreach ($errors->all() as $error)
-					                <div class="darken-3 white-text">{{ $error }}</div>
-					            @endforeach
-					        </div>
-					    @endif					
-					</section>	 			
-		 		</div>	 			
+		 		@include('layouts.message')	 			
+				<div class="row">
+					<div class="form-group label-floating">
+
+					<label class="col-lg-2" for="keywords">Search Article</label>
+
+					<div class="col-lg-8">
+						<input type="text" class="form-control" id="keywords" placeholder="Type search keywords">
+					</div>
+
+					<div class="col-lg-2">
+						<button id="search" class="btn btn-flat blue btn-flat" type="button"> Search</button>
+					</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<br />
+
+				<p>Sort articles by : <a id="id">ID &nbsp;<i id="ic-direction"></i></a></p>
+
+				<br />
+				<div id="data-content"> @yield("content")</div>
+					<input id="direction" type="hidden" value="asc" />	 	
 	 		</div>
 	 	{{-- </div> --}}
 	 {{-- </div> --}}
-	@yield('content')
 </div>
+{{-- @yield("content") --}}
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+        $('#search').on('click', function(){
+            $.ajax({
+                url : '/articles',
+                type : 'GET',
+                datatype : 'json',
+                data : {
+                    'keywords' : $('#keywords').val(),
+                    'direction' : $('#direction').val()
+                },
+                success : function(data)    {
+                    $('#data-content').html(data['view']);
+                    $('#keywords').val(data['keywords']);
+                    $('#direction').val(data['direction']);                    
+                },
+                error : function(xhr, status) {
+                    console.log(xhr.error + " ERROR STATUS : " + status);
+                },
+                complete : function() {
+                    alreadyloading = false;
+                }                
+            });
+        });
+    </script>
+    <script>
+	    $(document).ready(function() {
+	    $(document).on('click', '#id', function(e) {
+	    sort_articles();
+	    e.preventDefault();
+	    });
+	    });
+	    function sort_articles() {
+	    $('#id').on('click', function() {
+	    $.ajax({
+	    url : '/articles',
+	    typs : 'GET',
+	    dataType : 'json',
+	    data : {
+	    'keywords' : $('#keywords').val(),
+	    'direction' : $('#direction').val()
+	    },
+	    success : function(data) {
+	    $('#data-content').html(data['view']);
+	    $('#keywords').val(data['keywords']);
+	    $('#direction').val(data['direction']);
+
+	    if(data['direction'] == 'asc') {
+	    $('i#ic-direction').attr({class: "fa fa-arrow-up"});
+	    } else {
+	    $('i#ic-direction').attr({class: "fa fa-arrow-down"});
+	    }
+	    },
+	    error : function(xhr, status, error) {
+	    console.log(xhr.error + "\n ERROR STATUS : " + status +
+	    "\n" + error);
+	        },
+	    complete : function() {
+	    alreadyloading = false;
+	    }
+	    });
+	    });
+	    }
+	    </script>
 <script src="{{asset('js/materialize.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 @include('sweet::alert');
