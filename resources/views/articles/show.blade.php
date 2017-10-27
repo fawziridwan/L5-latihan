@@ -66,18 +66,19 @@
 					</ul>
 				</div>
 				<div id="test1" class="col s12">
-					{!! Form::open(['route' => 'comments.store', 'class' => 'form-horizontal', 'role' => 'form']) !!}
+					{{-- {!! Form::open(['route' => 'comments.store', 'class' => 'form-horizontal', 'role' => 'form']) !!} --}}
 					<div class="row">
 						<div class="form-group">
-							{!! Form::hidden('article_id', $value = $articles->id, array('readonly')) !!}
+							{{-- <{!! Form::hidden('article_id', $value = $articles->id, array('id'=>'article_id','readonly','id'=>'article_id')) !!} --}}
 						</div>
 						<div class="clear"></div>
 					</div>
 
 					<div class="row">
 						<div class="input-field col l12">
+							{!! form::hidden('article_id', $articles->id, ['id'=>'article_id']) !!}
 							{!! Form::label('content', 'Content', array('class' => 'col-lg-3 control-label')) !!}
-							{!! Form::textarea('content', null, array('class'=>'materialize-textarea','autofocus' => 'true')) !!}
+							{!! Form::textarea('content', null, array('class'=>'materialize-textarea','autofocus' => 'true','id'=>'content')) !!}
 							{!! $errors->first('content') !!}
 						</div>
 						<div class="clear"></div>
@@ -86,7 +87,7 @@
 					<div class="row">
 						<div class="input-field col l12">
 							{!! Form::label('user', 'User', array('class' => 'col-lg-3 control-label')) !!}
-							{!! Form::text('user', null)!!}
+							{!! Form::text('user', null, array('id'=>'user'))!!}
 							{!! $errors->first('user') !!}				
 						</div>
 						<div class="clear"></div>
@@ -94,11 +95,12 @@
 					<div class="row">
 						<div class="col-lg-3"></div>
 							<div class="input-field col l12">
-							{!! Form::submit('Save', array('class' => 'btn btn-flat blue white-text pull-right'))!!}
-								</div>
+								<button name="button" class="btn btn-raised blue" id="comment">Add</button>
+							{{-- {!! Form::submit('Save', array('class' => 'btn btn-flat blue white-text pull-right','id'=>'comment'))!!} --}}
+							</div>
 								<div class="clear"></div>
 					</div>
-					{!! Form::close() !!}											
+					{{-- {!! Form::close() !!}											 --}}
 				</div>
 				<div id="test2" class="col s12">
 					@foreach($comments as $comment)

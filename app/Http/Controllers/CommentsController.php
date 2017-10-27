@@ -48,6 +48,7 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->article_id);
         $validate = Validator::make($request->all(), Comment::valid());
         if ($validate->fails()) {
             return redirect()->route('articles.show', $request->article_id)

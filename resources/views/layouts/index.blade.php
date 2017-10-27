@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+	<meta name="_token" content="{{ csrf_token() }}"/>
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	@section('css')
     @show 
@@ -40,12 +41,12 @@
 				<p>Sort articles by : <a id="id">ID &nbsp;<i id="ic-direction"></i></a></p>
 
 				<br />
-				<div id="data-content"> @yield("content")</div>
 					<input id="direction" type="hidden" value="asc" />	 	
 	 		</div>
 	 	{{-- </div> --}}
 	 {{-- </div> --}}
 </div>
+<div id="data-content"> @yield("content")</div>
 {{-- @yield("content") --}}
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script>
@@ -72,7 +73,7 @@
             });
         });
     </script>
-    <script>
+	<script>
 	    $(document).ready(function() {
 	    $(document).on('click', '#id', function(e) {
 	    sort_articles();
@@ -110,7 +111,37 @@
 	    });
 	    });
 	    }
-	    </script>
+    </script>
+    <script>
+    	$.ajaxSetup({
+    		headers: {
+    			'X-CSRF-TOKEN' :$('meta[name = "_token"]').attr('content')
+    		}  
+    	});
+	    $('#comment').on('click', function(){
+	        $.ajax({
+	            url : '/postcomment',
+	            type : 'POST',
+	            datatype : 'json',
+	            data : {
+	            	'article_id' : $('#article_id').val(),
+	                'content' : $('#content').val(),
+	                'user' : $('#user').val()
+	            },
+	            success : function(data)    {
+	            	alert('success');              
+	            },
+	            error : function(xhr, status, error) {
+	            	var err = eval("("+xhr.responseText+")");
+	            	alert(err.message);
+	                console.log(xhr.error + " ERROR STATUS : " + status);
+	            },
+	            complete : function() {
+	                alreadyloading = false;
+	            }                
+	        });
+	    });	    	
+    </script>
 <script src="{{asset('js/materialize.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 @include('sweet::alert');

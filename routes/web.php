@@ -12,13 +12,13 @@
 */
 
 // Route::get('/', function () {return view('welcome');});
-
+ 
 // Route::get('/', function () {return view('show');});
 
 // Route::get('/', function () {
 // 	return view('profile');
 // })->name('profile');
-
+ 
 Route::get('/', function () {
 	return view('profile');
 });
@@ -27,6 +27,7 @@ Route::resource('admin/posts', 'Admin\\PostsController');
 
 Route::resource('/articles', 'ArticlesController');
 Route::resource('/comments', 'CommentsController');
+Route::post('/postcomment', 'CommentsController@store');
 Route::get('img/{id}','ArticlesController@showImage')->name('showImage');
 Route::put('change/{id}','ArticlesController@updateImage')->name('updateImage');
 Route::delete('delete/{id}','ArticlesController@deleteImage')->name('deleteImage');
