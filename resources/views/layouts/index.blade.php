@@ -14,39 +14,20 @@
 <body style="background-color: #fff;">
 @section('header')
     @include('layouts.header')
-@show
+@show 
 
 <div class="container clearfix">
 	 {{-- <div class="row row-offcanvas row-offcanvas-left"> --}}
 	 	{{-- <div id="main-content" class="col-xs-9 col-sm-9 main"> --}}
 	 		<div class="container">
-		 		@include('layouts.message')	 			
-				<div class="row">
-					<div class="form-group label-floating">
-
-					<label class="col-lg-2" for="keywords">Search Article</label>
-
-					<div class="col-lg-8">
-						<input type="text" class="form-control" id="keywords" placeholder="Type search keywords">
-					</div>
-
-					<div class="col-lg-2">
-						<button id="search" class="btn btn-flat blue btn-flat" type="button"> Search</button>
-					</div>
-						<div class="clear"></div>
-					</div>
-				</div>
-				<br />
-
-				<p>Sort articles by : <a id="id">ID &nbsp;<i id="ic-direction"></i></a></p>
-
-				<br />
-					<input id="direction" type="hidden" value="asc" />	 	
+		 		@include('layouts.message')		
+					@yield('search_sort')
 	 		</div>
 	 	{{-- </div> --}}
 	 {{-- </div> --}}
 </div>
 <div id="data-content"> @yield("content")</div>
+<input id="direction" type="hidden" value="asc" />	 	
 {{-- @yield("content") --}}
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script>

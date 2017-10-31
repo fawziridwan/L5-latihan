@@ -47,3 +47,8 @@ Route::get('reset-password/{id}/{token}', 'ReminderController@edit')->name('remi
 Route::post('reset-password/{id}/{token}','ReminderController@update')->name('reminders.update');
 
 Route::get('/home', 'HomeController@index');
+
+// excel report routes
+Route::get('importExport', 'ReportController@importExport');
+Route::get('downloadExcel/{type}','ReportController@downloadExcel');
+Route::post('importExcel','ReportController@importExcel');
