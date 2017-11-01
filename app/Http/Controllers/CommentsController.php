@@ -10,6 +10,8 @@ use App\Article;
 use Validator;
 use Session;
 use Alert;
+use DB;
+use Datatables;
 
 class CommentsController extends Controller
 {
@@ -27,7 +29,23 @@ class CommentsController extends Controller
      */
     public function index()
     {
-        //
+        return view('comment.index');        
+    }
+
+    public function getComments()
+    {
+        // cara 1
+        // $comments = Comment::all();
+        // return Datatables::of($comments)->make(true);
+        
+        // $comments = Comment::select(['id', 'article_id', 'content','user', 'created_at', 'updated_at'])->get();
+        $comments = Comment::all();
+        return Datatables::of($comments)
+            ->addColumn('action', function($comments)  {
+            return '<a href="#" class="btn-floating btn-float waves-effect waves-teal blue btn-xs" title="Show"><i class="fa fa-info"></i></a>'.
+                   '<a onclick="editForm('.$comments->id.')" href="comment/'.$comments->id.'/edit" class="btn-floating btn-float waves-effect waves-teal yellow btn-xs" title="Edit"><i class="fa fa-edit"></i></a>'.
+                   '<a onclick="deleteData('.$comments->id.')" class="btn-floating btn-float waves-effect waves-teal red btn-xs" title="Delete"><i class="fa fa-trash"></i></a>';
+                })->make(true);
     }
 
     /**
@@ -84,7 +102,9 @@ class CommentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comments = Comment::find($id);
+        $create = false;        
+        return view('comment.edit',compact('comment','create'));    
     }
 
     /**
@@ -96,7 +116,15 @@ class CommentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comments = Comment::find($id)->update($request->all());
+        
+        if ($comments) {
+            Alert::success('Comment success updated');
+            return redirect()->route("comment.show",$id);
+        } else {
+            Alert::error('Comment fail updated');
+            return redirect()->route("comment.show",$id);
+        }
     }
 
     /**
@@ -107,6 +135,6 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+       Comment::destroy($id);
     }
 }

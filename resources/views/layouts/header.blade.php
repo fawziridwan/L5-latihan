@@ -1,15 +1,17 @@
 <nav class="light-blue lighten-1" role="navigation">
-  <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Laravel - App</a>
+  <div class="nav-wrapper container">
+  <a id="logo-container" href="#" class="brand-logo">Laravel - App</a>
     <ul class="right hide-on-med-and-down">
         @if (Sentinel::check())
           <li>{!! link_to(route('logout'), 'Logout') !!}</li>
           <li><a>Welcome {!! Sentinel::getUser()->first_name !!}</a></li>
           <li><a href="{{ url('/articles')}}">Articles</a></li>
+          <li><a href="{{ url('/comment')}}">Table Comment</a></li>          
         @else
           <li><a  href="{{ url('/home') }}">Home</a></li>
           <li>{!! link_to(route('signup'), 'Signup') !!}</li>
           <li>{!! link_to(route('login'), 'Login') !!}</li>
-        @endif        
+        @endif                
     </ul>
 
     <ul id="nav-mobile" class="side-nav">

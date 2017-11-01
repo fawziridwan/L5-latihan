@@ -8,6 +8,8 @@ use Session;
 use File;
 use App\Http\Requests\ArticleRequest;
 use Alert;
+// use DB;
+// use Datatables;
 
 class ArticlesController extends Controller
 { 
@@ -225,5 +227,6 @@ class ArticlesController extends Controller
             return redirect()->route('articles.show',$img_file->article_id);            
         }
     }
+
 }
     

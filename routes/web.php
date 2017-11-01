@@ -52,3 +52,7 @@ Route::get('/home', 'HomeController@index');
 Route::get('importExport', 'ReportController@importExport');
 Route::get('downloadExcel/{type}','ReportController@downloadExcel');
 Route::post('importExcel','ReportController@importExcel');
+
+// Route::get('/comment','CommentsController@index');
+Route::get('comment',['uses'=>'CommentsController@index']);
+Route::get('comment/getComments',['as'=>'comment.getComments','uses'=>'CommentsController@getComments']);
