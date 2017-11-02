@@ -27,7 +27,7 @@ Route::resource('admin/posts', 'Admin\\PostsController');
 
 Route::resource('/articles', 'ArticlesController');
 Route::resource('/comments', 'CommentsController');
-Route::post('/postcomment', 'CommentsController@store');
+// Route::post('/postcomment', 'CommentsController@store');
 Route::get('img/{id}','ArticlesController@showImage')->name('showImage');
 Route::put('change/{id}','ArticlesController@updateImage')->name('updateImage');
 Route::delete('delete/{id}','ArticlesController@deleteImage')->name('deleteImage');
@@ -54,5 +54,4 @@ Route::get('downloadExcel/{type}','ReportController@downloadExcel');
 Route::post('importExcel','ReportController@importExcel');
 
 // Route::get('/comment','CommentsController@index');
-Route::get('comment',['uses'=>'CommentsController@index']);
-Route::get('comment/getComments',['as'=>'comment.getComments','uses'=>'CommentsController@getComments']);
+Route::get('api.comment','CommentsController@apiComment')->name('api.comment');

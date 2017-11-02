@@ -32,20 +32,25 @@ class CommentsController extends Controller
         return view('comment.index');        
     }
 
-    public function getComments()
+    public function apiComment()
     {
-        // cara 1
-        // $comments = Comment::all();
-        // return Datatables::of($comments)->make(true);
-        
-        // $comments = Comment::select(['id', 'article_id', 'content','user', 'created_at', 'updated_at'])->get();
-        $comments = Comment::all();
-        return Datatables::of($comments)
-            ->addColumn('action', function($comments)  {
-            return '<a href="#" class="btn-floating btn-float waves-effect waves-teal blue btn-xs" title="Show"><i class="fa fa-info"></i></a>'.
-                   '<a onclick="editForm('.$comments->id.')" href="comment/'.$comments->id.'/edit" class="btn-floating btn-float waves-effect waves-teal yellow btn-xs" title="Edit"><i class="fa fa-edit"></i></a>'.
-                   '<a onclick="deleteData('.$comments->id.')" class="btn-floating btn-float waves-effect waves-teal red btn-xs" title="Delete"><i class="fa fa-trash"></i></a>';
-                })->make(true);
+        $comment = Comment::all();
+        // $comment = Comment::select(['id', 'article_id', 'content', 'user', 'created_at', 'updated_at']);
+        return Datatables::of($comment)
+            ->addColumn('action', function ($comment) {
+                return '<a href="#" class="btn btn-floating btn-xs btn-primary"><i class="fa fa-eye"></i> Show</a>'.
+                   '<a href="#" onclick="editForm('.$comment->id.')" title="edit" class="btn btn-floating btn-xs yellow"><i class="fa fa-edit"></i></a>'.
+                   '<a href="#" onclick="deleteData('.$comment->id.')" title="delete" class="btn btn-floating btn-xs black"><i class="fa fa-trash"></i></a>';
+            })
+            ->editColumn('id', '{{$id}}')
+            ->removeColumn('password')
+            ->make(true);        
+        // return Datatables::of($comment)
+        //     ->addColumn('action', function ($comment) {
+        //         return '<a href="#" class="btn btn-floating btn-xs btn-primary" title="show"><i class="fa fa-info"></i></a>'.
+        //                '<a href="#" onclick="editForm('.$comment->id.')" title="edit" class="btn btn-floating btn-xs yellow"><i class="fa fa-edit"></i></a>'.
+        //                '<a href="#" onclick="deleteData('.$comment->id.')" title="delete" class="btn btn-floating btn-xs black"><i class="fa fa-trash"></i></a>';
+        //     })->make(true);
     }
 
     /**
@@ -55,7 +60,8 @@ class CommentsController extends Controller
      */
     public function create()
     {
-        //
+        // $create = true;        
+        // return view('comment.create')->with('create',$create); 
     }
 
     /**
@@ -66,10 +72,11 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->article_id);
+        // dd($request->article_id);
         $validate = Validator::make($request->all(), Comment::valid());
         if ($validate->fails()) {
-            return redirect()->route('articles.show', $request->article_id)
+            Alert::error('Failed Added comment');
+            return redirect()->route('comments.index', $request->id)
                 ->withErrors($validate)
                 ->withInput();
         } else {
@@ -77,10 +84,8 @@ class CommentsController extends Controller
             // Session::flash('notice', 'Success add comment');
             Alert::success('Success Add comment');
             // return Redirect::to('articles/'. $request->article_id);
-            return redirect()->route('articles.show', $request->article_id);
-        }
-        
-        
+            return redirect()->route('comments.index', $request->id);
+        }        
     }
 
     /**
@@ -103,8 +108,8 @@ class CommentsController extends Controller
     public function edit($id)
     {
         $comments = Comment::find($id);
-        $create = false;        
-        return view('comment.edit',compact('comment','create'));    
+        // $create = false;        
+        return $comments; 
     }
 
     /**

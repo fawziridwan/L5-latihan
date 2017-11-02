@@ -1,30 +1,33 @@
-<div class="section">
+<!-- Modal Trigger -->
+{{-- <a class="waves-effect waves-light btn modal-trigger" href="#modal-form">Modal</a> --}}
 
-  <div class="row">
-    <div class="input-field col s12">
-    {!! Form::label('content', 'Content', array('class' => 'col-lg-3 control-label')) !!}
-    {!! Form::textarea('content', null, array('class'=>'materialize-textarea','autofocus' => 'true')) !!}
-    <div style="color: red" class="data-error"> {!! $errors->first('content') !!} </div>
-      <div class="clear"></div>
-    </div>
-  </div>
+<!-- Modal Structure -->
+<div id="modal-form" class="modal" tabindex="1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <form method="post" class="form-horizontal" data-toggle="validator">
+        {{ csrf_field() }} {{ method_field('POST') }}
+      <div class="modal-content">
+        <h4 class="modal-title">Add Comment</h4>
+        <input type="hidden" name="id" id="id">
+        <div class="row">
+          <label for="content" class="col m3 control-label" data-error="wrong">Content</label>
+          <div class="col m6">
+            <input type="text" id="content" name="content" placeholder="Content" autofocus required>
+          </div>
+        </div>
 
-  <div class="row">
-    <div class="input-field col s12">
-    {!! Form::label('user', 'user', array('class'=>'col-lg-3 control-label')) !!}
-    {!! Form::text('user', null, array('autofocus'=>'true')) !!}
-    <div style="color: red" class="data-error"> {!! $errors->first('user') !!} </div>
-      <div class="clear"></div>
-    </div>
-  </div>
+        <div class="row">
+          <label for="user" class="col m3 control-label" data-error="wrong">User</label>
+          <div class="col m6">
+            <input type="text" id="user" name="user" placeholder="User" autofocus required>
+          </div>
+        </div>
 
-  <div class="row" style="margin-left: 2px; margin-right: 2px;">
-    <div class="col-lg-3"></div>
-      <div class="col-lg-9">
-        {!! Form::submit('Save', array('class'=>'btn btn-flat blue accent-3 waves-effect waves-light white-text')) !!}
-        {!! link_to(route('comment.index'), 'Back', ['class'=>'btn btn-raised btn-default btn-sm']) !!}
       </div>
-      <div class="clear"></div>
-  </div>
+    
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-flat modal-open btn-raised blue">Add</button>
+      <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+    </div>
+    </form>
 
 </div>

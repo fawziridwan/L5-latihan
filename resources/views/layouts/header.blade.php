@@ -6,7 +6,7 @@
           <li>{!! link_to(route('logout'), 'Logout') !!}</li>
           <li><a>Welcome {!! Sentinel::getUser()->first_name !!}</a></li>
           <li><a href="{{ url('/articles')}}">Articles</a></li>
-          <li><a href="{{ url('/comment')}}">Table Comment</a></li>          
+          <li><a href="{{ url('/comments')}}">Table Comment</a></li>          
         @else
           <li><a  href="{{ url('/home') }}">Home</a></li>
           <li>{!! link_to(route('signup'), 'Signup') !!}</li>
