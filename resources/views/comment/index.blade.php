@@ -3,9 +3,6 @@
 <div class="container">
         <div class="row">
             <div class="col s12 m12">
-                {{-- <div class="row buttons">
-                    <a class="waves-effect waves-light btn modal-trigger" onclick="addForm()">Add Comment</a>
-                </div> --}}
                 <table id="example" class="responsive-table" cellspacing="0" width="100%">
                     <thead>
                         <tr>

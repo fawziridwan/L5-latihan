@@ -8,8 +8,8 @@ use Session;
 use File;
 use App\Http\Requests\ArticleRequest;
 use Alert;
-// use DB;
-// use Datatables;
+use DB;
+use Datatables;
 
 class ArticlesController extends Controller
 { 
@@ -228,5 +228,16 @@ class ArticlesController extends Controller
         }
     }
 
+    public function datatable(){
+        return view('articles.datatable');
+    }
+
+    public function apiArticle()    {
+        $articles = Article::all();
+        return Datatables::of($articles)
+            ->addColumn('action', function ($articles) {
+                return '<a href="#" onclick="deleteData('.$articles->id.')" title="delete" class="btn btn-floating btn-xs black"><i class="fa fa-trash"></i></a>';
+            })->make(true); 
+    }
 }
     

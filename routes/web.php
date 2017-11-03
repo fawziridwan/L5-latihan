@@ -55,3 +55,9 @@ Route::post('importExcel','ReportController@importExcel');
 
 // Route::get('/comment','CommentsController@index');
 Route::get('api.comment','CommentsController@apiComment')->name('api.comment');
+
+// Route::get('api.articles','ArticlesController@apiArticle')->name('api.article');
+
+Route::get('datatable', ['uses'=>'ArticlesController@datatable']);
+
+Route::get('datatable/apiArticle', ['as'=>'datatable.apiArticle','uses'=>'ArticlesController@apiArticle']);
