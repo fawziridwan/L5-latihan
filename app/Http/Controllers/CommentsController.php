@@ -41,10 +41,7 @@ class CommentsController extends Controller
                 return '<a href="#" class="btn btn-floating btn-xs btn-primary"><i class="fa fa-eye"></i> Show</a>'.
                    '<a href="#" onclick="editForm('.$comment->id.')" title="edit" class="btn btn-floating btn-xs yellow"><i class="fa fa-edit"></i></a>'.
                    '<a href="#" onclick="deleteData('.$comment->id.')" title="delete" class="btn btn-floating btn-xs black"><i class="fa fa-trash"></i></a>';
-            })
-            ->editColumn('id', '{{$id}}')
-            ->removeColumn('password')
-            ->make(true);        
+            })->make(true);        
         // return Datatables::of($comment)
         //     ->addColumn('action', function ($comment) {
         //         return '<a href="#" class="btn btn-floating btn-xs btn-primary" title="show"><i class="fa fa-info"></i></a>'.

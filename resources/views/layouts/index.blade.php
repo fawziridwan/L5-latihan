@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
-	<meta name="_token" content="{{ csrf_token() }}"/>
+	<meta name="csrf-token" content="{{ csrf_token() }}"/>
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	 {{-- <script src="{{url('datatables/js/jquery.min.js')}}"></script>  --}}
 	<link rel="stylesheet" href="{{url('datatables/css/datatables.bootstrap.css')}}">
@@ -100,7 +100,7 @@
     <script>
     	$.ajaxSetup({
     		headers: {
-    			'X-CSRF-TOKEN' :$('meta[name = "_token"]').attr('content')
+    			'X-CSRF-TOKEN' :$('meta[name = "csrf-token"]').attr('content')
     		}  
     	});
 	    $('#comment').on('click', function(){
@@ -130,7 +130,7 @@
 	
 
 	<script type="text/javascript">
-				$('#example').DataTable({
+		var table = $('#example').DataTable({
 				    processing: true,
 				    serverSide: true,
 				    ajax: "{{ route('api.comment') }}",
@@ -144,14 +144,6 @@
 						{data: 'action', name: 'action', orderable: false, searchable:false}
 					]
 				});
-
-				function addForm()	{
-					save_method = "add";
-					$('input[name="_method]').val('POST');
-					$('#modal-form').modal('open');
-					$('modal-form form')[0].reset();
-					$('.modal-title').text("Add Comment");
-				}
 
 				function editForm(id)	{
 					save_method = "edit";
@@ -176,12 +168,12 @@
 					});
 				}
 
-				$(function()	{
+				/*$(function()	{
 					$('#modal-form form').on('submit', function (e)	{
 						if(!e.isDefaultPrevented()){
 							var id = $('#id').val();
-							if(save_method == 'add') url = "{{ url('comments') }}";
-							else "{{ url('comments') . '/' }}" + id;
+							if(save_method == 'add') url = "{ url('comments') }}";
+							else "{ url('comments') . '/' }}" + id;
 							
 							$.ajax({
 								url : url,
@@ -195,7 +187,26 @@
 							return false;
 						}
 					});
-				});
+				});*/
+
+				function deleteData(id)	{
+					var popup = confirm("Are you sure for delete the comment ?");
+					var csrf_token = $('meta[name="csrf-token"]').attr('content');
+					if (popup == true) {
+						$.ajax({
+							url: "{{ url('comments') }}" + '/' + id,
+							type: "POST",
+							data: {'_method': 'DELETE','_token':csrf_token},
+							success: function(data)	{
+								table.ajax.reload();
+								console.log(data);
+							},
+							error: function()	{
+								alert("Oops! Something Wrong!");
+							}
+						})
+					}
+				}
 
 
 	</script>
